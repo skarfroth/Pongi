@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] float movementSpeed = 6f;
-    private Vector3 movementVector;
+    public float movementSpeed = 6f;
+
     private Rigidbody2D rb2d;
+    private Vector3 movementVector;
 
     private void Start()
     {
@@ -18,17 +19,17 @@ public class Ball : MonoBehaviour
         rb2d.velocity = movementVector.normalized * movementSpeed;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (other.gameObject.CompareTag("Paddle"))
+        if (collision.CompareTag("Paddle"))
         {
             movementSpeed++;
             movementVector.x = -movementVector.x;
-            movementVector.y = -transform.InverseTransformPoint(other.transform.position).y;
+            movementVector.y = -transform.InverseTransformPoint(collision.transform.position).y;
         }
 
-        if (other.gameObject.CompareTag("Wall"))
+        else if (collision.CompareTag("Wall"))
         {
             movementVector.y = -movementVector.y;
         }

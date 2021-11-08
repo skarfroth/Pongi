@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     [SerializeField] private float movementSpeed = 5f;
-    public float playerClampOffset = 5f;
+    [SerializeField] private float playerClampOffsetTop = 5f;
+    [SerializeField] private float playerClampOffsetBottom = 5f;
 
+    private Rigidbody2D rb2d;
     private Vector3 movementVector;
     private Vector3 minScreenBounds;
     private Vector3 maxScreenBounds;
 
     private void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
         minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
     }
@@ -19,10 +21,12 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // Prevents player from going off screen
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minScreenBounds.y + playerClampOffset, maxScreenBounds.y - playerClampOffset), transform.position.z);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minScreenBounds.y + playerClampOffsetBottom, maxScreenBounds.y - playerClampOffsetTop), transform.position.z);
 
-        // Move player
-        movementVector.y = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
-        transform.Translate(movementVector);
+        movementVector.y = Input.GetAxis("Vertical");
+    }
+    private void FixedUpdate()
+    {
+        rb2d.velocity = movementVector * movementSpeed;
     }
 }

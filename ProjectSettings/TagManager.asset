@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerWall
   - Paddle
   - Wall
+  - Player1Goal
+  - Player2Goal
+  - Ball
   layers:
   - Default
   - TransparentFX
