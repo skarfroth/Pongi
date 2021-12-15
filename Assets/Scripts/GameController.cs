@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -8,6 +9,15 @@ public class GameController : MonoBehaviour
     private float originalBallSpeed;
     private Vector2 originalPaddle1Pos, originalPaddle2Pos;
     private Vector2 originalBallPos;
+
+    private void Awake()
+    {
+        GameObject settings = GameObject.Find("SettingsContainer");
+        if (settings.GetComponent<MainMenu>().playVSLocal)
+        {
+            paddle2.GetComponent<PlayerController>().shouldUse2PControls = true;
+        }
+    }
 
     private void Start()
     {

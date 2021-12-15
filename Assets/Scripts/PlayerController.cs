@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public bool shouldUse2PControls;
+
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float playerClampOffsetTop = 5f;
     [SerializeField] private float playerClampOffsetBottom = 5f;
@@ -22,8 +25,14 @@ public class PlayerController : MonoBehaviour
     {
         // Prevents player from going off screen
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minScreenBounds.y + playerClampOffsetBottom, maxScreenBounds.y - playerClampOffsetTop), transform.position.z);
-
-        movementVector.y = Input.GetAxis("Vertical");
+        if (!shouldUse2PControls)
+        {
+            movementVector.y = Input.GetAxis("Vertical");
+        }
+        if (shouldUse2PControls)
+        {
+            movementVector.y = Input.GetAxis("Vertical2");
+        }
     }
     private void FixedUpdate()
     {
