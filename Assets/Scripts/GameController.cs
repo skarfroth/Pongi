@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         GameObject settings = GameObject.Find("SettingsContainer");
         if (settings.GetComponent<MainMenu>().playVSLocal)
         {
